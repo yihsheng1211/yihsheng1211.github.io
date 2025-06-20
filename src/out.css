@@ -1,0 +1,232 @@
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #fdfaf6; /* 柔和的米色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .card-container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 2s ease-in-out;
+            margin: 20px; /* 添加外邊距，確保在小螢幕上有空間 */
+        }
+
+        .card-header {
+            background-image: linear-gradient(to right, #FFDAB9, #FFC0CB); /* 淡粉色漸變 */
+            padding: 1.5rem 1.5rem; //2.5rem 1.5rem;
+            text-align: center;
+            color: #4a4a4a;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .header-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #8B4513; /* 深棕色 */
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .header-subtitle {
+            font-size: 1.5rem;
+            color: #696969;
+        }
+
+        .card-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .section {
+            background-color: #fcf8f5;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d2691e; /* 巧克力色 */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+			place-items: center;
+        }
+        .image-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+			justify-content: center;
+        }
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+        .image-gallery iframe {
+            width: 100%;
+            //height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+			justify-content: center;
+        }
+        .image-gallery iframe:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* NEW: Style for the button to reveal the second page */
+        .reveal-button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .reveal-button {
+            background-color: #d2691e; /*#6580FF;*/ /* 巧克力色 */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .reveal-button:hover {
+            background-color: #a0522d;
+            transform: translateY(-3px);
+        }
+        /* NEW: Initially hide the daughter's section */
+        #daughterSection {
+            display: none;
+        }
+        #daughterHeader {
+            display: none;
+        }
+
+		
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.2rem;
+            }
+            .header-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section-content {
+                font-size: 1rem;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            .image-gallery img {
+                height: 120px;
+            }
+            .final-message {
+                font-size: 1.3rem;
+                line-height: 1.8;
+            }
+            .card-body {
+                padding: 1.5rem;
+            }
+            .final-message-section {
+                padding: 2rem;
+            }
+            .ai-button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+		
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+		
+		/* --- 1. 謝幕容器 (螢幕) --- */
+		.credits-container {
+			width: 80%;
+			max-width: 600px;
+			height: 15vh; /* 螢幕高度，可自行調整 */
+			/*border: 2px solid #555;*/
+			position: relative; /* 作為內部絕對定位元素的基準 */
+			overflow: hidden; /* 這是關鍵！隱藏超出容器範圍的內容 */
+		}
+
+		/* --- 2. 字幕內容區塊 --- */
+		.credits-content {
+		    font-size:20px;
+			color: #d2691e;
+			text-align: center;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			/* 應用動畫 */
+			animation: scroll-up 20s linear infinite; /* 名稱、時長、速度曲線、次數 */
+		}
+
+		/* 當滑鼠移入時暫停動畫，方便閱讀 */
+		.credits-content:hover {
+			animation-play-state: paused;
+		}
+
+		/* --- 3. 定義動畫關鍵影格 (Keyframes) --- */
+		@keyframes scroll-up {
+			/* --- 階段一：上移 (佔用 0% 到 80% 的時間) --- */
+			0% {
+				/* 從容器下方 100% 的位置開始 (完全在螢幕外) */
+				transform: translateY(100%);
+			}
+			90% {
+				/* 移動到自身高度 -100% 的位置 (完全滾出螢幕上方) */
+				transform: translateY(-100%);
+			}
+
+			/* --- 階段二：等待 (佔用 80% 到 100% 的時間) --- */
+			100% {
+				/* 保持在螢幕上方外的位置，創造出空白的等待時間 */
+				transform: translateY(-100%);
+			}
+		}	
