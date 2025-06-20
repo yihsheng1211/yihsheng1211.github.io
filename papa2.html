@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特別的雙重慶祝</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+TC:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #fdfaf6; /* 柔和的米色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .card-container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 2s ease-in-out;
+            margin: 20px; /* 添加外邊距，確保在小螢幕上有空間 */
+        }
+
+        .card-header {
+            background-image: linear-gradient(to right, #FFDAB9, #FFC0CB); /* 淡粉色漸變 */
+            padding: 1.5rem 1.5rem; //2.5rem 1.5rem;
+            text-align: center;
+            color: #4a4a4a;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .header-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #8B4513; /* 深棕色 */
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .header-subtitle {
+            font-size: 1.5rem;
+            color: #696969;
+        }
+
+        .card-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .section {
+            background-color: #fcf8f5;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d2691e; /* 巧克力色 */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+			place-items: center;
+        }
+        .image-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+			justify-content: center;
+        }
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+        .image-gallery iframe {
+            width: 100%;
+            //height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+			justify-content: center;
+        }
+        .image-gallery iframe:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* NEW: Style for the button to reveal the second page */
+        .reveal-button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .reveal-button {
+            background-color: #d2691e; /*#6580FF;*/ /* 巧克力色 */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .reveal-button:hover {
+            background-color: #a0522d;
+            transform: translateY(-3px);
+        }
+        /* NEW: Initially hide the daughter's section */
+        #daughterSection {
+            display: none;
+        }
+        #daughterHeader {
+            display: none;
+        }
+
+		
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.2rem;
+            }
+            .header-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section-content {
+                font-size: 1rem;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            .image-gallery img {
+                height: 120px;
+            }
+            .final-message {
+                font-size: 1.3rem;
+                line-height: 1.8;
+            }
+            .card-body {
+                padding: 1.5rem;
+            }
+            .final-message-section {
+                padding: 2rem;
+            }
+            .ai-button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+		
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+		
+		/* --- 1. 謝幕容器 (螢幕) --- */
+		.credits-container {
+			width: 80%;
+			max-width: 600px;
+			height: 15vh; /* 螢幕高度，可自行調整 */
+			/*border: 2px solid #555;*/
+			position: relative; /* 作為內部絕對定位元素的基準 */
+			overflow: hidden; /* 這是關鍵！隱藏超出容器範圍的內容 */
+		}
+
+		/* --- 2. 字幕內容區塊 --- */
+		.credits-content {
+		    font-size:20px;
+			color: #d2691e;
+			text-align: center;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			/* 應用動畫 */
+			animation: scroll-up 20s linear infinite; /* 名稱、時長、速度曲線、次數 */
+		}
+
+		/* 當滑鼠移入時暫停動畫，方便閱讀 */
+		.credits-content:hover {
+			animation-play-state: paused;
+		}
+
+		/* --- 3. 定義動畫關鍵影格 (Keyframes) --- */
+		@keyframes scroll-up {
+			/* --- 階段一：上移 (佔用 0% 到 80% 的時間) --- */
+			0% {
+				/* 從容器下方 100% 的位置開始 (完全在螢幕外) */
+				transform: translateY(100%);
+			}
+			90% {
+				/* 移動到自身高度 -100% 的位置 (完全滾出螢幕上方) */
+				transform: translateY(-100%);
+			}
+
+			/* --- 階段二：等待 (佔用 80% 到 100% 的時間) --- */
+			100% {
+				/* 保持在螢幕上方外的位置，創造出空白的等待時間 */
+				transform: translateY(-100%);
+			}
+		}		
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card-header">
+            <div class="header-content" id="papaHeader">
+                <h1 class="header-title">雙重喜悅，雙重祝福</h1>
+                <p class="header-subtitle">父親節快樂！</p>
+            </div>
+            <div class="header-content" id="daughterHeader">
+                <h1 class="header-title">雙重喜悅，雙重祝福</h1>
+                <p class="header-subtitle">怡嘉，<font color="#FF0000">生日快樂</font>！</p>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="section" id="papaSection">
+                <h2 class="section-title">爸爸養育用心良苦</h2>
+               <p class="section-content">
+                    親愛的爸爸，今天是屬於你的節日！感謝你一直以來無微不至的關愛與教導，為我們撐起一片天。無論是在<font color="#FF0000">公路車</font>上飛馳的身影、<font color="#FF0000">馬拉松</font>賽場上的堅持、<font color="#FF0000">網球</font>場上的矯健身手，還是<font color="#FF0000">高爾夫</font>球場上的瀟灑揮桿，都展現了對生活的熱愛與積極。你辛勤的付出，是我們成長路上的堅實後盾。祝 父親節快樂，願你永遠健康、快樂、自在！
+                </p>
+                <div class="reveal-button-container">
+                    <button id="revealButton" class="reveal-button">點選這裡祝爸爸,父親節快樂！</button>
+                </div>
+				
+                 <div class="image-gallery">
+                    <img alt="父親照片" style="height: 100%; overflow:hidden; width: 80%" scrolling="no" src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/225268_0.jpg" ></iframe>
+                 </div>
+				 
+             </div>
+
+            <div class="section" id="daughterSection" > 
+			    <h2 class="section-title">驚喜時刻：吾家有女初長成</h2>
+                <div class="section-content" id="nText">
+					<p>
+						在慶祝爸爸的同時，我們還有另一個特別的喜悅要分享！怡嘉，妳已從牙牙學語的孩童，成長為如此<font color="#FF0000">活潑、自信、美麗</font>。一步步探索世界，勇敢追逐夢想。願妳的生日，如同妳的笑容般燦爛，未來的人生道路充滿陽光，每一步都踏實而堅定。祝小公主，<font color="#FF0000">生日快樂</font>！
+					</p>
+				</div>
+				<table style="width: 100%;">
+				  <tr>
+				    <th style="width: 10%;"></th>
+					<th style="width: 90%;">
+						<div class="credits-container" id="songText" >
+							<div class="credits-content">
+								<h2>總會有人</h2>
+								<h2>把你看得  比自己更重要</h2>
+								<h2>會有人</h2>
+								<h2>發現你  身上所有的好</h2>
+								<h2>總會有人</h2>
+								<h2>放棄所有  也不把你丟掉</h2>
+								<h2>會有人</h2>
+								<h2>在你身邊  就引以為豪</h2>
+								<h2>總會有人</h2>
+								<h2>想借你的肩膀  來依靠</h2>
+								<h2>讓你覺得</h2>
+								<h2>自己也會被人  需要</h2>
+							</div>
+						</div>
+					</th>
+				    <th style="width: 5%;"></th>
+				  </tr>	
+                </table>				
+				
+                <div class="image-gallery" >
+                    <img alt="幼年照片1" style="height: 100%; overflow:hidden; width: 100%" src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/225271_0.jpg" >
+					<iframe style="height: 100%; overflow:hidden; width: 100%"
+				         src="https://script.google.com/macros/s/AKfycbwj4FZVRNqoESgk_40IL1mSbgw8tCBoWMD25Pvt8KM1GIYx_CKwFqcWm8ooxKjDD2FnaA/exec?id=1hNQbCOy0YsTiC8TgRjs7lPBpbYXAxc1x"
+				    >
+					</iframe>				
+                    <!--<img alt="幼年照片2" style="height: 100%; overflow:hidden; width: 100%" src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/225269_0.jpg" >-->
+                    <img alt="幼年照片3" style="height: 100%; overflow:hidden; width: 100%" src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/225270_0.jpg" >
+                    <img alt="近照" style="height: 100%; overflow:hidden; width: 80%" src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/225272_0.jpg">
+                </div>
+				
+				<audio id="bgm" autoplay loop muted >
+				  <source src="https://cdn.jsdelivr.net/gh/yihsheng1211/ecard@main/src/music.mp3" type="audio/mpeg">
+				  您的瀏覽器不支援 audio 元件。
+				</audio>
+		    </div>
+        </div>
+    </div>
+
+    <script>
+        const playMusic = document.getElementById('bgm');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealButton = document.getElementById('revealButton');
+            const daughterSection = document.getElementById('daughterSection');
+            const daughterHeader = document.getElementById('daughterHeader');
+            const papaHeader = document.getElementById('papaHeader');
+
+            if (revealButton && daughterSection) {
+                revealButton.addEventListener('click', function() {
+                    daughterSection.style.display = 'block'; 
+                    papaSection.style.display = 'none'; 
+                    daughterHeader.style.display = 'block'; 
+                    papaHeader.style.display = 'none'; 
+					
+					playMusic.muted=false;
+					playMusic.play();
+					playMusic.volume=0.5;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
