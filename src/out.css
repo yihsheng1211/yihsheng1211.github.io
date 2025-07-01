@@ -204,7 +204,7 @@
 			top: 0;
 			left: 0;
 			/* 應用動畫 */
-			animation: scroll-up 20s linear infinite; /* 名稱、時長、速度曲線、次數 */
+			animation: scroll-up 30s linear infinite; /* 名稱、時長、速度曲線、次數 */
 		}
 
 		/* 當滑鼠移入時暫停動畫，方便閱讀 */
