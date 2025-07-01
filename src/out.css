@@ -204,7 +204,7 @@
 			top: 0;
 			left: 0;
 			/* 應用動畫 */
-			animation: scroll-up 30s linear infinite; /* 名稱、時長、速度曲線、次數 */
+			animation: scroll-up 35s linear infinite; /* 名稱、時長、速度曲線、次數 */
 			animation-delay: -10s;  /* 🔥 讓動畫一開始就已經「跑過一輪」 */
 		}
 
