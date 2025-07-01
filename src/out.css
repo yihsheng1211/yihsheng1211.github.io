@@ -198,7 +198,7 @@
 		.credits-content {
 		    font-size:20px;
 			color: #d2691e;
-			text-align: center;
+			text-align: left;
 			position: absolute;
 			width: 100%;
 			top: 0;
@@ -220,7 +220,7 @@
 				/* 從容器下方 100% 的位置開始 (完全在螢幕外) */
 				transform: translateY(100%);
 			}
-			80% {
+			95% {
 				/* 移動到自身高度 -100% 的位置 (完全滾出螢幕上方) */
 				transform: translateY(-100%);
 			}
