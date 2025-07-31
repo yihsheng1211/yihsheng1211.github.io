@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h2>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
+        const bounds = [[22.6, 119.1], [25.6, 122.1]];
+        const map = L.map('map').setView([24.135, 120.648], 9);
+        L.imageOverlay(radarUrl, bounds).addTo(map);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup("您的位置").openPopup();
+                    map.panTo([lat, lon]);
+                },
+                err => {
+                    console.error("定位失敗:", err);
+                    alert("無法取得地理位置，請允許定位或在支援的裝置上開啟HTTPS！");
+                }
+            );
+        } else {
+            alert("此瀏覽器不支援地理定位。");
+        }
+    </script>
+
+<!-- Visual Studio Browser Link -->
+<script type="text/javascript" src="/_vs/browserLink" async="async" id="__browserLink_initializationData" data-requestId="30261015054f4e6386900ccc97fbd098" data-requestMappingFromServer="false" data-connectUrl="http://localhost:58406/f6ef501fefc54445aba263795b0de9ed/browserLink"></script>
+<!-- End Browser Link -->
+
+<script src="/_framework/aspnetcore-browser-refresh.js"></script></body>
+</html>
