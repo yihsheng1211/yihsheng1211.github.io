@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
     <title>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -13,7 +16,6 @@
     </style>
 </head>
 <body>
-    <h2>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</h2>
     <div id="map"></div>
 	
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -33,7 +35,6 @@
 
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
 			showMap(radarUrl);
-			
 		radarTP.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
 			showMap(radarUrl);
@@ -47,6 +48,7 @@
 		radarKH.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-003.png";
 			showMap(radarUrl);
+			titleH.innerText = "降雨雷達-南部雷達回波圖與所在地";
 		});
 
 
@@ -84,6 +86,5 @@
 			currentOverlay = L.imageOverlay(urlWithNoCache, bounds).addTo(map);
 		}
     </script>
-
-</body>
+	</body>
 </html>
