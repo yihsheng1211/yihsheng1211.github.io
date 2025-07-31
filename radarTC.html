@@ -52,6 +52,7 @@
 
 		function showMap(radarUrl) {
 			const bounds = [[22.6, 119.1], [25.6, 122.1]];
+			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
 
 			// 只初始化一次地圖
 			if (!map) {
@@ -80,14 +81,9 @@
 			}
 
 			// 加入新的雷達圖層
-			currentOverlay = L.imageOverlay(radarUrl, bounds).addTo(map);
+			currentOverlay = L.imageOverlay(urlWithNoCache, bounds).addTo(map);
 		}
     </script>
 
-<!-- Visual Studio Browser Link -->
-<!--<script type="text/javascript" src="/_vs/browserLink" async="async" id="__browserLink_initializationData" data-requestId="30261015054f4e6386900ccc97fbd098" data-requestMappingFromServer="false" data-connectUrl="http://localhost:58406/f6ef501fefc54445aba263795b0de9ed/browserLink"></script>
--->
-<!-- End Browser Link -->
-
-<!--<script src="/_framework/aspnetcore-browser-refresh.js"></script>--></body>
+</body>
 </html>
