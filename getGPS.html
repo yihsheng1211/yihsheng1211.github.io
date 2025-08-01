@@ -1,0 +1,23 @@
+<html>
+  <head></head>head>
+<body>
+
+
+<script>
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      alert(`你的座標是：${lat}, ${lon}`);
+    },
+    function(error) {
+      alert("無法取得定位：" + error.message);
+    }
+  );
+} else {
+  alert("你的瀏覽器不支援 GPS 定位。");
+}
+  </script>
+</body>
+  </html>
