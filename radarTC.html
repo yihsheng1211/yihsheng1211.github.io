@@ -20,21 +20,22 @@
 	
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 	
-	<div>
+    <!--<div>
                    <button id="radarTP" >北</button>
                    <button id="radarTC" >中</button>
                    <button id="radarKH" >南</button>
-    </div>
+    </div>-->
     <script>
-		const radarTP = document.getElementById('radarTP');
-		const radarTC = document.getElementById('radarTC');
-		const radarKH = document.getElementById('radarKH');
+		//const radarTP = document.getElementById('radarTP');
+		//const radarTC = document.getElementById('radarTC');
+		//const radarKH = document.getElementById('radarKH');
 		var radarUrl="";
 		let map; // 全域變數
 		let currentOverlay; // 目前的圖層	
 
-			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
-			showMap(radarUrl);
+	        radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
+		showMap(radarUrl);
+	    /*
 		radarTP.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
 			showMap(radarUrl);
@@ -51,9 +52,12 @@
 			titleH.innerText = "降雨雷達-南部雷達回波圖與所在地";
 		});
 
-
+              */
+	    
 		function showMap(radarUrl) {
-			const bounds = [[22.6, 119.1], [25.6, 122.1]];
+		        var y=22.63;
+			var x=119.09;
+			var bounds = [[y, x], [y+3, x+3]];
 			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
 
 			// 只初始化一次地圖
