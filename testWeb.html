@@ -155,10 +155,14 @@
     </script>
 
 <!-- 載入 FingerprintJS 並執行 -->
-<script src="https://openfpcdn.io/fingerprintjs/v3"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    FingerprintJS.load().then(fp => {
+  // 1. 動態載入 FingerprintJS 的模組
+  const script = document.createElement('script');
+  script.src = 'https://openfpcdn.io/fingerprintjs/v3/fingerprint.min.js';
+  script.onload = () => {
+    const fpPromise = FingerprintJS.load();
+
+    fpPromise.then(fp => {
       fp.get().then(result => {
         const visitorId = result.visitorId;
         fetch("https://script.google.com/macros/s/AKfycby_yi2oQA2WG6C5HmjH-4_4off0MbGikY3tJWi56XiF4TMJwbDLeOOiznTvXf_-MPiKag/exec", {
@@ -174,7 +178,8 @@
         });
       });
     });
-  });
+  };
+  document.head.appendChild(script);
 </script>
 	
 </body>
