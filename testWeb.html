@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>特別的雙重慶祝</title>
-  <script src="https://openfpcdn.io/fingerprintjs/v3"></script>
+
     <meta name="description" content="獻給父親的特別祝福。">
     <meta property="og:title" content="獻給父親的特別祝福"> 
     <meta property="og:description" content="獻給父親的特別祝福">
@@ -151,24 +151,31 @@
 		  bgm.pause();
 		});		
 
-		window.addEventListener('load', () => {	    
-		    FingerprintJS.load().then(fp => {
-		      fp.get().then(result => {
-		        const visitorId = result.visitorId;
-		        fetch("https://script.google.com/macros/s/AKfycby_yi2oQA2WG6C5HmjH-4_4off0MbGikY3tJWi56XiF4TMJwbDLeOOiznTvXf_-MPiKag/exec", {
-		          method: "POST",
-		          mode: "no-cors",
-		          headers: {
-		            "Content-Type": "application/json"
-		          },
-		          body: JSON.stringify({
-		            fingerprint: visitorId,
-		            userAgent: navigator.userAgent
-		          })
-		        });
-		      });
-		    });		
-		});      
+ 
     </script>
+
+<!-- 載入 FingerprintJS 並執行 -->
+<script src="https://openfpcdn.io/fingerprintjs/v3"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    FingerprintJS.load().then(fp => {
+      fp.get().then(result => {
+        const visitorId = result.visitorId;
+        fetch("https://script.google.com/macros/s/AKfycby_yi2oQA2WG6C5HmjH-4_4off0MbGikY3tJWi56XiF4TMJwbDLeOOiznTvXf_-MPiKag/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            fingerprint: visitorId,
+            userAgent: navigator.userAgent
+          })
+        });
+      });
+    });
+  });
+</script>
+	
 </body>
 </html>
