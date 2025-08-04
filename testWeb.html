@@ -156,28 +156,26 @@
 
 <!-- 載入 FingerprintJS 並執行 -->
 <script>
-  // 1. 動態載入 FingerprintJS 的模組
-  const script = document.createElement('script');
-  script.src = 'https://openfpcdn.io/fingerprintjs/v3/fingerprint.min.js';
-  script.onload = () => {
-    const fpPromise = FingerprintJS.load();
+  FingerprintJS.load().then(fp => {
+    fp.get().then(result => {
+      const visitorId = result.visitorId;
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://script.google.com/macros/s/AKfycbzufbev3oLJ0JT-GuJRpjQUpXST7fpf6U0NfJZ-paAo8RGSq1q3saxm1AmeWY_l4F18/exec';
+      form.style.display = 'none';
 
-    fpPromise.then(fp => {
-      fp.get().then(result => {
-        const visitorId = result.visitorId;
-fetch("https://script.google.com/macros/s/AKfycbzufbev3oLJ0JT-GuJRpjQUpXST7fpf6U0NfJZ-paAo8RGSq1q3saxm1AmeWY_l4F18/exec", {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: `fingerprint=${encodeURIComponent(visitorId)}&userAgent=${encodeURIComponent(navigator.userAgent)}`
-});
+      ['fingerprint', 'userAgent'].forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = key === 'fingerprint' ? visitorId : navigator.userAgent;
+        form.appendChild(input);
       });
+
+      document.body.appendChild(form);
+      form.submit();
     });
-  };
-  document.head.appendChild(script);
-</script>
+  });</script>
 	
 </body>
 </html>
