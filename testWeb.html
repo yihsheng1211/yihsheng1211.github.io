@@ -157,7 +157,7 @@
 <!-- 載入 FingerprintJS 並執行 -->
 <script>
     // 在這裡替換成你部署 Apps Script 後獲得的網頁應用程式 URL
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxjScHSiIgiPDo9_EMSW-8y22Pu9FgKs2-gduB5HvEN1QXFPOsu1cSwFM20VXZXS3WA_Q/exec";
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz57GG6kerI89GbcOH3FGo_pMDR8_8inZZ-xHsFbQYrc5GNIjsoNkWBkU-ESqWF8ez2AQ/exec";
 
     /**
      * 使用一個公共 API 來獲取使用者的 IP 位址
@@ -181,12 +181,14 @@
       const ipAddress = await getIpAddress();
       const userAgent = navigator.userAgent; // 獲取使用者代理字串
       const timestamp = new Date().toISOString(); // ISO 格式的時間戳
+      const referrer = document.referrer || '直接訪問'; // 新增獲取來源網頁
 
       // 準備要發送到 Apps Script 的資料
       const formData = new FormData();
       formData.append('ipAddress', ipAddress);
       formData.append('userAgent', userAgent);
       formData.append('timestamp', timestamp);
+      formData.append('referrer', referrer); // 新增來源網頁欄位   
 
       try {
         const response = await fetch(GAS_WEB_APP_URL, {
