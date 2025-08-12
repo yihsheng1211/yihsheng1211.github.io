@@ -72,7 +72,7 @@
 							L.marker([lat, lon]).addTo(map)
 								.bindPopup("您的位置").openPopup();
 							map.panTo([lat, lon]);
-							alert(lat+" "+lon);
+							//alert(lat+" "+lon);
 							recordVisitor(lat,lon);
 						},
 						err => {
