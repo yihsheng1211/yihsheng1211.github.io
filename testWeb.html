@@ -33,7 +33,7 @@
 		let map; // 全域變數
 		let currentOverlay; // 目前的圖層	
 
-	        radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
+	        radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
 		showMap(radarUrl);
 	    /*
 		radarTP.addEventListener('click', function() {
@@ -55,14 +55,14 @@
               */
 	    
 		function showMap(radarUrl) {
-		        var y=22.7915;
-			var x=119.102;
-			var bounds = [[y, x], [y+3, x+3]];
+		        var y=23.6515;
+			var x=119.912;
+			var bounds = [[y, x], [26.3485, 122.888]];
 			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
 
 			// 只初始化一次地圖
 			if (!map) {
-				map = L.map('map').setView([24.135, 120.648], 9);
+				map = L.map('map').setView([y+1.5, x+1.5], 9);
 
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(
