@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <title>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+	
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	
+    <div>
+                   <button id="radarTP" >北</button>
+                   <button id="radarTC" >中</button>
+                   <button id="radarKH" >南</button>
+                   <button id="radarAll" >全部</button>
+    </div>
+    <script>
+		const radarTP = document.getElementById('radarTP');
+		const radarTC = document.getElementById('radarTC');
+		const radarKH = document.getElementById('radarKH');
+		const radarAll = document.getElementById('radarAll');
+		var radarUrl="";
+		let map; // 全域變數
+		let currentOverlay; // 目前的圖層	
+
+		radarTP.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
+			showMap(radarUrl,23.6515,26.3485,119.912,122.888);
+		});
+		
+		radarTC.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
+			showMap(radarUrl,22.7915,25.4885,119.102,122.058);
+		});
+		
+		radarKH.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-003.png";
+			showMap(radarUrl,21.1815,23.8785,118.920,121.840);
+		});
+
+		radarAll.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0058-003.png";
+			showMap(radarUrl,20.500,26.500,118.000,124.000);
+		});              
+	    
+		function showMap(radarUrl,y1,y2,x1,x2) {
+		        //var y1=22.7915;
+			//var x=119.102;
+			var bounds = [[y1, x1], [y2, x2]];
+			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
+
+			// 只初始化一次地圖
+			if (!map) {
+				map = L.map('map').setView([(y1+y2)/2, (x1+x2)/2], 9);
+
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(
+						pos => {
+							const lat = pos.coords.latitude;
+							const lon = pos.coords.longitude;
+							L.marker([lat, lon]).addTo(map)
+								.bindPopup("您的位置").openPopup();
+							map.panTo([lat, lon]);
+							//alert(lat+" "+lon);
+							recordVisitor(lat,lon);
+						},
+						err => {
+							console.error("定位失敗:", err);
+							alert("無法取得地理位置");
+						}
+					);
+				}
+			}
+
+			// 清除舊圖層
+			if (currentOverlay) {
+				map.removeLayer(currentOverlay);
+			}
+
+			// 加入新的雷達圖層
+			currentOverlay = L.imageOverlay(urlWithNoCache, bounds).addTo(map);
+		}
+
+        // 預設載入北部圖
+        window.onload = () => {
+            radarTC.click();
+        };		
+    </script>
+<!-- 記錄log -->
+<script src="https://yihsheng1211.github.io/src/webLog.js"></script>	
+</body>
+</html>
