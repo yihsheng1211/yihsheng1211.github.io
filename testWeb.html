@@ -57,7 +57,7 @@
 		function showMap(radarUrl) {
 		        var y=23.6515;
 			var x=119.912;
-			var bounds = [[y, x], [26.3485, 122.888]];
+			var bounds = [[y, x], [y+3, x+3]];
 			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
 
 			// 只初始化一次地圖
