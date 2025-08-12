@@ -1,5 +1,5 @@
     // 在這裡替換成你部署 Apps Script 後獲得的網頁應用程式 URL
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby8sTL1cY59QhuTleoKoo2Sq7r11dm1a8JsXb-kOKipxXly5dTT9YNoAivYO88ES7d8vg/exec";
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxFtoYETnmDQOyO7Zk__WG915-Y1zg0B6xZIukUrw4ZwIjA8nh8CepgVO3d3bq07u5y/exec";
 
     /**
      * 使用一個公共 API 來獲取使用者的 IP 位址
@@ -19,7 +19,7 @@
     /**
      * 記錄訪問者資訊到 Google Apps Script 後端
      */
-    async function recordVisitor() {
+    async function recordVisitor(inlatitude,inlongitude) {
       const ipAddress = await getIpAddress();
       const userAgent = navigator.userAgent; // 獲取使用者代理字串
       const timestamp = new Date().toISOString(); // ISO 格式的時間戳
@@ -32,7 +32,9 @@
       formData.append('userAgent', userAgent);
       formData.append('timestamp', timestamp);
       formData.append('referrer', referrer); // 新增來源網頁欄位   
-
+      if (inlatitude != null) formData.append('inlatitude', inlatitude);
+      if (inlongitude != null) formData.append('inlongitude', inlongitude);
+      
       try {
         const response = await fetch(GAS_WEB_APP_URL, {
           method: 'POST',
@@ -53,5 +55,5 @@
 
     // 當 DOM 內容載入完成時，執行記錄函式
     document.addEventListener('DOMContentLoaded', () => {
-      recordVisitor();
+      recordVisitor(null,null);
     });
