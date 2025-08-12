@@ -19,7 +19,7 @@
     /**
      * 記錄訪問者資訊到 Google Apps Script 後端
      */
-    async function recordVisitor(var inlatitude,var inlongitude) {
+    async function recordVisitor(inlatitude,inlongitude) {
       const ipAddress = await getIpAddress();
       const userAgent = navigator.userAgent; // 獲取使用者代理字串
       const timestamp = new Date().toISOString(); // ISO 格式的時間戳
