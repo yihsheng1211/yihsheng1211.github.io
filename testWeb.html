@@ -20,49 +20,50 @@
 	
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 	
-    <!--<div>
+    <div>
                    <button id="radarTP" >北</button>
                    <button id="radarTC" >中</button>
                    <button id="radarKH" >南</button>
-    </div>-->
+                   <button id="radarAll" >全部</button>
+    </div>
     <script>
-		//const radarTP = document.getElementById('radarTP');
-		//const radarTC = document.getElementById('radarTC');
-		//const radarKH = document.getElementById('radarKH');
+		const radarTP = document.getElementById('radarTP');
+		const radarTC = document.getElementById('radarTC');
+		const radarKH = document.getElementById('radarKH');
+		const radarAll = document.getElementById('radarAll');
 		var radarUrl="";
 		let map; // 全域變數
 		let currentOverlay; // 目前的圖層	
 
-	        radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
-		showMap(radarUrl);
-	    /*
 		radarTP.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
-			showMap(radarUrl);
+			showMap(radarUrl,23.6515,26.3485,119.912,122.888);
 		});
 		
 		radarTC.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
-			showMap(radarUrl);
+			showMap(radarUrl,22.7915,25.4885,119.102,122.058);
 		});
 		
 		radarKH.addEventListener('click', function() {
 			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-003.png";
-			showMap(radarUrl);
-			titleH.innerText = "降雨雷達-南部雷達回波圖與所在地";
+			showMap(radarUrl,21.1815,23.8785,118.920,121.840);
 		});
 
-              */
+		radarAll.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0058-003.png";
+			showMap(radarUrl,20.500,26.500,118.000,124.000);
+		});              
 	    
-		function showMap(radarUrl) {
-		        var y=22.7915;
-			var x=119.102;
-			var bounds = [[y, x], [25.4885, 122.058]];
+		function showMap(radarUrl,x1,x2,y1,y2) {
+		        //var y1=22.7915;
+			//var x=119.102;
+			var bounds = [[y1, x1], [y2, x2]];
 			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
 
 			// 只初始化一次地圖
 			if (!map) {
-				map = L.map('map').setView([y+1.5, x+1.5], 9);
+				map = L.map('map').setView([(y1+y2)/2, (x1+x2)/2], 9);
 
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(
@@ -91,6 +92,11 @@
 			// 加入新的雷達圖層
 			currentOverlay = L.imageOverlay(urlWithNoCache, bounds).addTo(map);
 		}
+
+        // 預設載入北部圖
+        window.onload = () => {
+            radarTC.click();
+        };		
     </script>
 <!-- 記錄log -->
 <script src="https://yihsheng1211.github.io/src/webLog.js"></script>	
