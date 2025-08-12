@@ -1,5 +1,5 @@
     // 在這裡替換成你部署 Apps Script 後獲得的網頁應用程式 URL
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby8sTL1cY59QhuTleoKoo2Sq7r11dm1a8JsXb-kOKipxXly5dTT9YNoAivYO88ES7d8vg/exec";
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwePIF7v-wytsVo7RcOxuwQusLFz9MqBt8dvX6N2-XIOURzCh908ilcw7V3fgz5k_GU/exec";
 
     /**
      * 使用一個公共 API 來獲取使用者的 IP 位址
