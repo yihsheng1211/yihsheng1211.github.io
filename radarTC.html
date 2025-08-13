@@ -1,59 +1,104 @@
-    // 在這裡替換成你部署 Apps Script 後獲得的網頁應用程式 URL
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBakNBMw2nfXfGqVIzhh1sp04X4bGF7mChqgHo5ukTO5GJRsWh3hqRoEnrn-qpISQi/exec";
-
-    /**
-     * 使用一個公共 API 來獲取使用者的 IP 位址
-     * @returns {Promise<string>} 返回一個包含 IP 位址的 Promise
-     */
-    async function getIpAddress() {
-      try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-      } catch (error) {
-        console.error('無法獲取 IP 位址:', error);
-        return '未知 IP';
-      }
-    }
-
-    /**
-     * 記錄訪問者資訊到 Google Apps Script 後端
-     */
-    async function recordVisitor(inlatitude,inlongitude) {
-      const ipAddress = await getIpAddress();
-      const userAgent = navigator.userAgent; // 獲取使用者代理字串
-      const timestamp = new Date().toISOString(); // ISO 格式的時間戳
-      const pathname = window.location.pathname;
-      const referrer = pathname.substring(pathname.lastIndexOf('/') + 1) || '直接訪問'; // 新增獲取來源網頁
-
-      // 準備要發送到 Apps Script 的資料
-      const formData = new FormData();
-      formData.append('ipAddress', ipAddress);
-      formData.append('userAgent', userAgent);
-      formData.append('timestamp', timestamp);
-      formData.append('referrer', referrer); // 新增來源網頁欄位   
-      if (inlatitude != null) formData.append('inlatitude', inlatitude);
-      if (inlongitude != null) formData.append('inlongitude', inlongitude);
-      
-      try {
-        const response = await fetch(GAS_WEB_APP_URL, {
-          method: 'POST',
-          body: formData,
-          // Apps Script 會自動處理 FormData，所以我們不需要設定 Content-Type
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('記錄成功:', result);
-        } else {
-          console.error('記錄失敗，HTTP 狀態碼:', response.status);
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <title>&#x964D;&#x96E8;&#x96F7;&#x9054; - &#x5357;&#x5C6F;&#x96F7;&#x9054;&#x56DE;&#x6CE2;&#x5716;&#x8207;&#x6240;&#x5728;&#x4F4D;&#x7F6E;</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
         }
-      } catch (error) {
-        console.error('發送請求到 Apps Script 時發生錯誤:', error);
-      }
-    }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+	
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	
+    <div>
+                   <button id="radarTP" >北</button>
+                   <button id="radarTC" >中</button>
+                   <button id="radarKH" >南</button>
+                   <button id="radarAll" >全部</button>
+    </div>
+    <script>
+		const radarTP = document.getElementById('radarTP');
+		const radarTC = document.getElementById('radarTC');
+		const radarKH = document.getElementById('radarKH');
+		const radarAll = document.getElementById('radarAll');
+		var radarUrl="";
+		let map; // 全域變數
+		let currentOverlay; // 目前的圖層	
 
-    // 當 DOM 內容載入完成時，執行記錄函式
-    document.addEventListener('DOMContentLoaded', () => {
-      recordVisitor(null,null);
-    });
+		radarTP.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-001.png";
+			showMap(radarUrl,23.6515,26.3485,119.912,122.888);
+		});
+		
+		radarTC.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-002.png";
+			showMap(radarUrl,22.7915,25.4885,119.102,122.058);
+		});
+		
+		radarKH.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0084-003.png";
+			showMap(radarUrl,21.1815,23.8785,118.920,121.840);
+		});
+
+		radarAll.addEventListener('click', function() {
+			radarUrl = "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0058-003.png";
+			showMap(radarUrl,20.500,26.500,118.000,124.000);
+		});              
+	    
+		function showMap(radarUrl,y1,y2,x1,x2) {
+		        //var y1=22.7915;
+			//var x=119.102;
+			var bounds = [[y1, x1], [y2, x2]];
+			const urlWithNoCache = radarUrl + '?t=' + new Date().getTime();
+
+			// 只初始化一次地圖
+			if (!map) {
+				map = L.map('map').setView([(y1+y2)/2, (x1+x2)/2], 9);
+
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(
+						pos => {
+							const lat = pos.coords.latitude;
+							const lon = pos.coords.longitude;
+							L.marker([lat, lon]).addTo(map)
+								.bindPopup("您的位置").openPopup();
+							map.panTo([lat, lon]);
+							//alert(lat+" "+lon);
+							recordVisitor(lat,lon);
+						},
+						err => {
+							console.error("定位失敗:", err);
+							alert("無法取得地理位置");
+						}
+					);
+				}
+			}
+
+			// 清除舊圖層
+			if (currentOverlay) {
+				map.removeLayer(currentOverlay);
+			}
+
+			// 加入新的雷達圖層
+			currentOverlay = L.imageOverlay(urlWithNoCache, bounds).addTo(map);
+		}
+
+        // 預設載入北部圖
+        window.onload = () => {
+            radarTC.click();
+        };		
+    </script>
+<!-- 記錄log -->
+<script src="https://yihsheng1211.github.io/src/webLog.js"></script>	
+</body>
+</html>
